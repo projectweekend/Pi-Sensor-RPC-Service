@@ -1,0 +1,26 @@
+{
+  "name": "Pi-Sensor-RPC-Service",
+  "version": "1.0.0",
+  "description": "An RPC service providing sensor data from Ar-Starbug (https://github.com/projectweekend/Ar-Starbug) using RabbitMQ",
+  "main": "main.js",
+  "dependencies": {
+    "jackrabbit": "^3.0.8",
+    "loggly": "^1.0.7",
+    "serialport": "^1.4.6",
+    "throng": "^1.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/projectweekend/Pi-Sensor-RPC-Service.git"
+  },
+  "author": "Brian Hines",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/projectweekend/Pi-Sensor-RPC-Service/issues"
+  },
+  "homepage": "https://github.com/projectweekend/Pi-Sensor-RPC-Service"
+}
