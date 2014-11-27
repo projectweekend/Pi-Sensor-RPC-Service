@@ -1,8 +1,7 @@
 This project runs on a Raspberry Pi connected, via serial port, to an Arduino ([Ar-Starbug](https://github.com/projectweekend/Ar-Starbug)) that monitors a few sensors. **Pi-Sensor-RPC-Service** connects to a [RabbitMQ](http://www.rabbitmq.com/) server and listens for messages. When a message is received on the appropriate queue, the sensor data is read and returned to the client that sent the message. This architecture makes it simple for any process, running anywhere (like [Holly](https://github.com/projectweekend/Holly)), to access the sensor data as needed.
 
-------------------------------------------------------------------------------
+
 ### Installation with Fabric
-------------------------------------------------------------------------------
 
 Using [Fabric](http://www.fabfile.org/) there is an installation task included in this project's `fabfile`. With the Raspberry Pi connected to the same network as your computer, run the following command:
 
