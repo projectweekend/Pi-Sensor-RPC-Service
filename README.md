@@ -18,6 +18,18 @@ The task will prompt you for these values:
 * `Serial rate:` - The baud rate for the serial port connection, for example: `9600`
 * `Rabbit URL:` - The connection URL for the RabbitMQ server. If you don't feel like running your own, check out [CloudAMPQ](https://www.cloudamqp.com/).
 
+The install process will add an [Upstart](http://upstart.ubuntu.com/) script that will handle starting/stopping the service when the Raspberry Pi starts up or shuts down.
+
+To manually stop it:
+```
+sudo service snesor-rpc stop
+```
+
+To manually start it:
+```
+sudo service snesor-rpc start
+```
+
 
 ### Usage
 
