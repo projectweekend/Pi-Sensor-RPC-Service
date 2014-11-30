@@ -22,12 +22,12 @@ The install process will add an [Upstart](http://upstart.ubuntu.com/) script tha
 
 To manually stop it:
 ```
-sudo service snesor-rpc stop
+sudo service sensor-rpc stop
 ```
 
 To manually start it:
 ```
-sudo service snesor-rpc start
+sudo service sensor-rpc start
 ```
 
 
