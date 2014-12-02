@@ -1,7 +1,7 @@
 from StringIO import StringIO
 
 from fabric import api
-from fabric.operations import prompt, put
+from fabric.contrib.files import exists
 
 
 UPSTART_TEMPLATE = """
@@ -24,23 +24,29 @@ end script
 
 
 def raspberry_pi():
-	api.env.hosts = ["{0}.local".format(prompt("Raspberry Pi:"))]
+	api.env.hosts = ['{0}.local'.format(api.prompt('Raspberry Pi:'))]
 	api.env.user = 'pi'
 
 
 def install():
 	api.require('hosts', provided_by=[raspberry_pi])
 
+	if exists('/etc/init/sensor-rpc.conf', use_sudo=True):
+		print('"sensor-rpc" is already installed, use the "update" task for changes')
+		return
+
 	upstart_values = {}
-	upstart_values['loggly_token'] = prompt("Loggly token:")
-	upstart_values['loggly_domain'] = prompt("Loggly domain:")
-	upstart_values['serial_address'] = prompt("Serial address:")
-	upstart_values['serial_rate'] = prompt("Serial rate:")
-	upstart_values['rabbit_url'] = prompt("Rabbit URL:")
+	upstart_values['loggly_token'] = api.prompt("Loggly token:")
+	upstart_values['loggly_domain'] = api.prompt("Loggly domain:")
+	upstart_values['serial_address'] = api.prompt("Serial address:")
+	upstart_values['serial_rate'] = api.prompt("Serial rate:")
+	upstart_values['rabbit_url'] = api.prompt("Rabbit URL:")
 	upstart_file = StringIO(UPSTART_TEMPLATE.format(**upstart_values))
 
+	api.sudo('echo Yes, do as I say! | apt-get -y --force-yes install upstart')
+
 	with api.cd('/etc/init'):
-		upload = put(upstart_file, 'sensor-rpc.conf', use_sudo=True)
+		upload = api.put(upstart_file, 'sensor-rpc.conf', use_sudo=True)
 		assert upload.succeeded
 
 	api.run('git clone https://github.com/projectweekend/Pi-Sensor-RPC-Service.git')
