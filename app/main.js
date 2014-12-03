@@ -14,7 +14,7 @@ var run = function () {
 
     var handleMessage = function ( message, ack ) {
         serialPort.on( "data", function ( data ) {
-            ack( JSON.stringify( utils.parseSerialData( data ) ) );
+            ack( utils.parseSerialData( data ) );
         } );
         serialPort.write( message.serialMessage, function ( err, data ) {
             if ( err ) {

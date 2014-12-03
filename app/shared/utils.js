@@ -6,5 +6,5 @@ exports.parseSerialData = function ( serialData ) {
         var parts = sensorReading.split( ":" );
         output[ parts[ 0 ] ] = parseFloat( parts[ 1 ] );
     } );
-    return output ;
+    return output;
 };
