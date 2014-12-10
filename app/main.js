@@ -48,11 +48,12 @@ var run = function () {
             getSerialResponse
         ], function ( err, result ) {
             if ( err ) {
+                console.log( err );
                 logger.log( err );
                 ack();
                 process.exit( 1 );
             }
-            return ack( result );
+            return ack( result[ 2 ] );
         } );
     };
 
