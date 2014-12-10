@@ -41,8 +41,9 @@ var run = function () {
     };
 
     var handleMessage = function ( message, ack ) {
+        console.log( "Calling message handler" );
         async.series( [
-            serialWrite,
+            serialWrite( message.serialMessage ),
             serialDrain,
             getSerialResponse
         ], function ( err, result ) {
@@ -56,10 +57,12 @@ var run = function () {
     };
 
     var serve = function () {
+        console.log( "Serve" );
         broker.handle( "sensor.get", handleMessage );
     };
 
     var create = function () {
+        console.log( "Create" );
         broker.create( "sensor.get", { prefetch: 5 }, serve );
     };
 
@@ -70,13 +73,16 @@ var run = function () {
     } );
 
     serialPort.on( "open", function () {
+        console.log( "Serial Open" );
         serialPort.on( "data", function ( data ) {
+            console.log( "Serial data handler registered" );
             serialData = utils.parseSerialData( data );
         } );
         logger.log( "Serial port open" );
         broker.once( "connected", create );
     } );
 };
+
 
 throng( run, {
     workers: os.cpus().length,
