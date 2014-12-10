@@ -27,17 +27,22 @@ var run = function () {
     };
 
     var getSerialResponse = function ( done ) {
-        var takingTooLong = false;
-        var start = new Date();
-        while ( !serialResponse && !takingTooLong ) {
-            var end = new Date();
-            takingTooLong = end - start > 2000;
+        // var takingTooLong = false;
+        // var start = new Date();
+        // while ( !serialResponse && !takingTooLong ) {
+        //     var end = new Date();
+        //     takingTooLong = end - start > 2000;
+        // }
+        while ( !serialResponse ) {
+
         }
 
-        if ( serialResponse ) {
-            return done( null, serialResponse );
-        }
-        return done( new Error( "Serial response timeout" ) );
+        return done( null, serialResponse );
+
+        // if ( serialResponse ) {
+        //     return done( null, serialResponse );
+        // }
+        // return done( new Error( "Serial response timeout" ) );
     };
 
     var handleMessage = function ( message, ack ) {
