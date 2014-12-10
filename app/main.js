@@ -10,7 +10,7 @@ var logger = connections.logger( [ "Pi-Sensor-RPC-Service" ] );
 var run = function () {
     logger.log( "Starting Pi-Sensor-RPC-Service" );
 
-    var serialPort = connections.serialport();
+    var SerialPort = connections.serialport();
     var broker = connections.jackrabbit();
 
     var serialResponse = null;
@@ -19,7 +19,7 @@ var run = function () {
         return function ( done ) {
             console.log( "Calling serial write with: " + data );
             serialResponse = null;
-            serialPort.write( data, done );
+            SerialPort.write( data, done );
         };
     };
 
@@ -76,9 +76,9 @@ var run = function () {
         process.exit();
     } );
 
-    serialPort.on( "open", function () {
+    SerialPort.on( "open", function () {
         console.log( "Serial Open" );
-        serialPort.on( "data", function ( data ) {
+        SerialPort.on( "data", function ( data ) {
             console.log( "Serial data handler called" );
             serialResponse = utils.parseSerialData( data );
         } );
