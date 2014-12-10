@@ -4,6 +4,7 @@
   "description": "An RPC service providing sensor data from Ar-Starbug (https://github.com/projectweekend/Ar-Starbug) using RabbitMQ",
   "main": "main.js",
   "dependencies": {
+    "async": "^0.9.0",
     "jackrabbit": "^3.0.8",
     "loggly": "^1.0.7",
     "serialport": "^1.4.6",
