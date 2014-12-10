@@ -31,7 +31,7 @@ var run = function () {
         var start = new Date();
         while ( !serialResponse && !takingTooLong ) {
             var end = new Date();
-            takingTooLong = end - start > 500;
+            takingTooLong = end - start > 2000;
         }
 
         if ( serialResponse ) {
