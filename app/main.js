@@ -17,16 +17,19 @@ var run = function () {
 
     var serialWrite = function ( data ) {
         return function ( done ) {
+            console.log( "Calling serial write" );
             serialResponse = null;
             serialPort.write( data, done );
         };
     };
 
     var serialDrain = function ( done ) {
+        console.log( "Calling serial drain" );
         serialPort.drain( done );
     };
 
     var getSerialResponse = function ( done ) {
+        console.log( "Calling serial response" );
         // var takingTooLong = false;
         // var start = new Date();
         // while ( !serialResponse && !takingTooLong ) {
@@ -82,7 +85,7 @@ var run = function () {
         console.log( "Serial Open" );
         serialPort.on( "data", function ( data ) {
             console.log( "Serial data handler registered" );
-            serialData = utils.parseSerialData( data );
+            serialResponse = utils.parseSerialData( data );
         } );
         logger.log( "Serial port open" );
         broker.once( "connected", create );
