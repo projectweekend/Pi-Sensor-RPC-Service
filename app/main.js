@@ -23,11 +23,6 @@ var run = function () {
         };
     };
 
-    var serialDrain = function ( done ) {
-        console.log( "Calling serial drain" );
-        serialPort.drain( done );
-    };
-
     var getSerialResponse = function ( done ) {
         console.log( "Calling serial response" );
         console.log( "serialResponse: " + serialResponse );
@@ -52,7 +47,6 @@ var run = function () {
         console.log( "Calling message handler - message.serialMessage: " + message.serialMessage );
         async.series( [
             serialWrite( message.serialMessage ),
-            serialDrain,
             getSerialResponse
         ], function ( err, result ) {
             if ( err ) {
