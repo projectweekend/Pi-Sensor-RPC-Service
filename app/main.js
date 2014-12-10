@@ -17,7 +17,7 @@ var run = function () {
 
     var serialWrite = function ( data ) {
         return function ( done ) {
-            console.log( "Calling serial write" );
+            console.log( "Calling serial write with: " + data );
             serialResponse = null;
             serialPort.write( data, done );
         };
@@ -30,17 +30,17 @@ var run = function () {
 
     var getSerialResponse = function ( done ) {
         console.log( "Calling serial response" );
+        console.log( "serialResponse: " + serialResponse );
+        return done( null, serialResponse );
         // var takingTooLong = false;
         // var start = new Date();
         // while ( !serialResponse && !takingTooLong ) {
         //     var end = new Date();
         //     takingTooLong = end - start > 2000;
         // }
-        while ( !serialResponse ) {
+        // while ( !serialResponse ) {
 
-        }
-
-        return done( null, serialResponse );
+        // }
 
         // if ( serialResponse ) {
         //     return done( null, serialResponse );
@@ -49,7 +49,7 @@ var run = function () {
     };
 
     var handleMessage = function ( message, ack ) {
-        console.log( "Calling message handler" );
+        console.log( "Calling message handler - message.serialMessage: " + message.serialMessage );
         async.series( [
             serialWrite( message.serialMessage ),
             serialDrain,
@@ -61,6 +61,7 @@ var run = function () {
                 ack();
                 process.exit( 1 );
             }
+            console.log( result );
             return ack( result[ 2 ] );
         } );
     };
@@ -84,10 +85,9 @@ var run = function () {
     serialPort.on( "open", function () {
         console.log( "Serial Open" );
         serialPort.on( "data", function ( data ) {
-            console.log( "Serial data handler registered" );
+            console.log( "Serial data handler called" );
             serialResponse = utils.parseSerialData( data );
         } );
-        logger.log( "Serial port open" );
         broker.once( "connected", create );
     } );
 };
