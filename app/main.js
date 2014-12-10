@@ -25,17 +25,17 @@ var run = function () {
 
     var getSerialResponse = function ( done ) {
         console.log( "Calling serial response" );
-        console.log( "serialResponse: " + serialResponse );
-        return done( null, serialResponse );
         // var takingTooLong = false;
         // var start = new Date();
         // while ( !serialResponse && !takingTooLong ) {
         //     var end = new Date();
         //     takingTooLong = end - start > 2000;
         // }
-        // while ( !serialResponse ) {
-
-        // }
+        while ( !serialResponse ) {
+            console.log( "Waiting for serial data..." );
+        }
+        console.log( "serialResponse: " + serialResponse );
+        return done( null, serialResponse );
 
         // if ( serialResponse ) {
         //     return done( null, serialResponse );
@@ -56,7 +56,7 @@ var run = function () {
                 process.exit( 1 );
             }
             console.log( result );
-            return ack( result[ 2 ] );
+            return ack( result[ 1 ] );
         } );
     };
 
