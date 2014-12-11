@@ -43,18 +43,15 @@ var run = function () {
                 ack();
                 process.exit( 1 );
             }
-            console.log( result );
             return ack( result[ 1 ] );
         } );
     };
 
     var serve = function () {
-        console.log( "Serve" );
         broker.handle( "sensor.get", handleMessage );
     };
 
     var create = function () {
-        console.log( "Create" );
         broker.create( "sensor.get", { prefetch: 5 }, serve );
     };
 
@@ -65,9 +62,7 @@ var run = function () {
     } );
 
     SerialPort.on( "open", function () {
-        console.log( "Serial Open" );
         SerialPort.on( "data", function ( data ) {
-            console.log( "Serial data handler called" );
             serialResponse = utils.parseSerialData( data );
         } );
         broker.once( "connected", create );
