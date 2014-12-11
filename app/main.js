@@ -17,37 +17,26 @@ var run = function () {
 
     var serialWrite = function ( data ) {
         return function ( done ) {
-            console.log( "Calling serial write with: " + data );
             serialResponse = null;
             SerialPort.write( data, done );
         };
     };
 
-    var getSerialResponse = function ( done ) {
-        console.log( "Calling serial response" );
-        // var takingTooLong = false;
-        // var start = new Date();
-        // while ( !serialResponse && !takingTooLong ) {
-        //     var end = new Date();
-        //     takingTooLong = end - start > 2000;
-        // }
-        while ( !serialResponse ) {
-            console.log( "Waiting for serial data..." );
-        }
-        console.log( "serialResponse: " + serialResponse );
-        return done( null, serialResponse );
-
-        // if ( serialResponse ) {
-        //     return done( null, serialResponse );
-        // }
-        // return done( new Error( "Serial response timeout" ) );
+    var serialRead = function ( done ) {
+        var checkForResponse = function () {
+            if ( serialResponse === null ) {
+                setTimeout( checkForResponse, 50 );
+            } else {
+                return done( serialResponse );
+            }
+        };
+        checkForResponse();
     };
 
     var handleMessage = function ( message, ack ) {
-        console.log( "Calling message handler - message.serialMessage: " + message.serialMessage );
         async.series( [
             serialWrite( message.serialMessage ),
-            getSerialResponse
+            serialRead
         ], function ( err, result ) {
             if ( err ) {
                 console.log( err );
