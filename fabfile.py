@@ -13,8 +13,6 @@ respawn limit 10 5
 
 env LOGGLY_TOKEN={loggly_token}
 env LOGGLY_SUBDOMAIN={loggly_domain}
-env SERIAL_ADDRESS={serial_address}
-env SERIAL_RATE={serial_rate}
 env RABBIT_URL={rabbit_url}
 
 script
@@ -38,8 +36,6 @@ def install():
 	upstart_values = {}
 	upstart_values['loggly_token'] = api.prompt("Loggly token:")
 	upstart_values['loggly_domain'] = api.prompt("Loggly domain:")
-	upstart_values['serial_address'] = api.prompt("Serial address:")
-	upstart_values['serial_rate'] = api.prompt("Serial rate:")
 	upstart_values['rabbit_url'] = api.prompt("Rabbit URL:")
 	upstart_file = StringIO(UPSTART_TEMPLATE.format(**upstart_values))
 
