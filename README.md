@@ -14,8 +14,6 @@ The task will prompt you for these values:
 * `Raspberry Pi:` - The hostname of the Raspberry Pi, for example: `red-dwarf`. Given the example, the Fabric script will attempt to ssh into `red-dwarf.local`.
 * `Loggly token:` - The token from your [Loggly](https://www.loggly.com/) account. The service logs data using Loggly which makes it easier to remotely monitor.
 * `Loggly domain:` - The domain from your Loggly account.
-* `Serial address:` - The address of the serial port in use, for example: `/dev/ttyAMA0`
-* `Serial rate:` - The baud rate for the serial port connection, for example: `9600`
 * `Rabbit URL:` - The connection URL for the RabbitMQ server. If you don't feel like running your own, check out [CloudAMPQ](https://www.cloudamqp.com/).
 
 The install process will add an [Upstart](http://upstart.ubuntu.com/) script that will handle starting/stopping the service when the Raspberry Pi starts up or shuts down.
@@ -29,6 +27,20 @@ To manually start it:
 ```
 sudo service sensor-rpc start
 ```
+
+
+### Environment Variables
+
+The following environment variables can be used to control configuration. The required items are auto-populated via the install task.
+
+* `RABBIT_URL` - Required - The connection URL for the RabbitMQ server. If you don't feel like running your own, check out [CloudAMPQ](https://www.cloudamqp.com/).
+* `LOGGLY_TOKEN` - Required - The token from your [Loggly](https://www.loggly.com/) account. The service logs data using Loggly which makes it easier to remotely monitor.
+* `LOGGLY_SUBDOMAIN` - Required - The domain from your Loggly account.
+* `SENSOR_QUEUE` - Optional - The name of the queue to use. Defaults to `sensor.get`.
+* `SENSOR_LOGGLY_TAG` - Optional - The tag name to use in Loggly when recording items. Defaults to `Pi-Sensor-RPC-Service`.
+* `SERIAL_ADDRESS` - Optional - The serial address to use. Defaults to `/dev/ttyAMA0`.
+* `SERIAL_RATE` - Optional - The baud rate for the serial connection. Defaults to `9600`.
+* `SERIAL_READ_INTERVAL` - Optional - The interval, in milliseconds, used for checking the serial line for new data. Defaults to `50`.
 
 
 ### Usage
