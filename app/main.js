@@ -3,9 +3,10 @@ var async = require( "async" );
 var throng = require( "throng" );
 var connections = require( "./shared/connections" );
 var utils = require( "./shared/utils" );
+var config = require( "./shared/configuration" );
 
 
-var logger = connections.logger( [ "Pi-Sensor-RPC-Service" ] );
+var logger = connections.logger( config.sensorReadingLogglyTag );
 
 var run = function () {
     logger.log( "Starting Pi-Sensor-RPC-Service" );
@@ -25,7 +26,7 @@ var run = function () {
     var serialRead = function ( done ) {
         var checkForResponse = function () {
             if ( serialResponse === null ) {
-                setTimeout( checkForResponse, 50 );
+                setTimeout( checkForResponse, config.serialReadInterval );
             } else {
                 return done( null, serialResponse );
             }
@@ -48,11 +49,11 @@ var run = function () {
     };
 
     var serve = function () {
-        broker.handle( "sensor.get", handleMessage );
+        broker.handle( config.sensorQueue, handleMessage );
     };
 
     var create = function () {
-        broker.create( "sensor.get", { prefetch: 5 }, serve );
+        broker.create( config.sensorQueue, { prefetch: 5 }, serve );
     };
 
     process.once( "uncaughtException", function ( err ) {

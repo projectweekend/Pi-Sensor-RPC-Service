@@ -1,32 +1,26 @@
 var jr = require( "jackrabbit" );
 var sp = require( "serialport" );
 var loggly = require( "loggly" );
-
-
-var logglyToken = process.env.LOGGLY_TOKEN;
-var logglySubdomain = process.env.LOGGLY_SUBDOMAIN;
-var serialAddress = process.env.SERIAL_ADDRESS;
-var serialRate = process.env.SERIAL_RATE;
-var rabbitURL = process.env.RABBIT_URL;
+var config = require( "./configuration" );
 
 
 exports.jackrabbit = function () {
-    return jr( rabbitURL, 1 );
+    return jr( config.rabbitURL, 1 );
 };
 
 
-exports.logger = function ( tags ) {
+exports.logger = function ( tag ) {
     return loggly.createClient( {
-        token: logglyToken,
-        subdomain: logglySubdomain,
-        tags: tags
+        token: config.logglyToken,
+        subdomain: config.logglySubdomain,
+        tags: [ tag ]
     } );
 };
 
 
 exports.serialport = function () {
-    return new sp.SerialPort( serialAddress, {
-        baudrate: serialRate,
+    return new sp.SerialPort( config.serialAddress, {
+        baudrate: config.serialRate,
         parser: sp.parsers.readline( "\n" )
     } );
 };
