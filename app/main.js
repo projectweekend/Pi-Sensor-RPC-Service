@@ -27,7 +27,7 @@ var run = function () {
             if ( serialResponse === null ) {
                 setTimeout( checkForResponse, 50 );
             } else {
-                return done( serialResponse );
+                return done( null, serialResponse );
             }
         };
         checkForResponse();
@@ -39,7 +39,6 @@ var run = function () {
             serialRead
         ], function ( err, result ) {
             if ( err ) {
-                console.log( err );
                 logger.log( err );
                 ack();
                 process.exit( 1 );
